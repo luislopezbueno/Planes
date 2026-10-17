@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Planes por Madrid</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --ink:#3b3320; --muted:#8a7f63;
+  --yellow:#fff1a8; --yellow-hover:#ffe988; --yellow-line:#f1d96a;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:560px;margin:0 auto;padding:48px 20px 56px;text-align:center}
+h1{font-size:clamp(2.2rem,9vw,3.4rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;line-height:1.05}
+.sub{color:var(--muted);margin:0 0 36px;font-size:1.05rem}
+.botones{display:flex;flex-direction:column;gap:14px}
+button{font:inherit;font-weight:700;font-size:1.25rem;color:var(--ink);
+  background:var(--yellow);border:2px solid var(--yellow-line);border-radius:20px;
+  padding:20px 24px;cursor:pointer;transition:background .15s,transform .1s}
+button:hover{background:var(--yellow-hover)}
+button:active{transform:scale(.98)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+button[aria-pressed="true"]{background:var(--yellow-hover);border-color:var(--ink)}
+.resultado{margin-top:36px;min-height:150px;padding:28px 20px;border:2px dashed var(--yellow-line);border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.resultado .vacio{color:var(--muted)}
+.nombre{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:800;line-height:1.1;margin:0;overflow-wrap:anywhere}
+.tipo{display:inline-block;background:var(--yellow);border-radius:999px;padding:4px 14px;font-size:.95rem;font-weight:500}
+.nota{color:var(--muted);font-size:.95rem;margin:0}
+.otra{margin-top:16px;font-size:1rem;padding:10px 20px;border-radius:999px;background:#fff}
+.otra:hover{background:var(--yellow)}
+.pop{animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}button{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Planes por Madrid</h1>
+  <p class="sub">Pulsa y deja que decida la suerte.</p>
+  <div class="botones" role="group" aria-label="Tipo de plan">
+    <button type="button" data-cat="restaurantes" aria-pressed="false">Restaurantes</button>
+    <button type="button" data-cat="cafeterias" aria-pressed="false">Cafeterías</button>
+  </div>
+  <div class="resultado" id="resultado" aria-live="polite">
+    <span class="vacio">Elige una opción para ver tu plan.</span>
+  </div>
+</main>
+<script>
+// Cada elemento: [nombre, tipo, nota opcional]
+var R = {
+  "Mexicano": ["Tiki Taco","Bakan Madrid","Tacos La Ventiocho","La Once Mil","Julieta Lemon","La Diavla","Regañadientes","Insurgente"],
+  "Japonés": ["La Monarracha","Kuikku","Sushi Bar Padre Damián","Akiro","Ponja"],
+  "Chino y noodles": [["Biang Biang Bar","noodles"],["Jin Yun Shao Bing","panes rellenos"],"Katsu Chino"],
+  "Tailandés y asiático": [["Casa Pei","tailandés"],"Baovan","Bambao","Yoppo Club"],
+  "Italiano": [["Naked & Sated","pasta"],["Pummarola","en Pozuelo"],"Mo de Movimiento","NAP","Circo Popolare","L’Antica Trattoria","Taberna Nonetta","Borbotta","Trattoria de Alfredo","Focacciamo","Mandarosso","TonTon","Sardo Madrid",["Manifesto 13","italiana con toque peruano"]],
+  "Hamburguesas y bocadillos": ["Pacífico Madrid",["La Prensa","smash burgers"],["Galgo","smash burgers"],"Manteca Burger","Burger Jazz","Antonias",["Alright","americana y BBQ"],"Apetito House","San Guchito","Bocátame Madrid","Chez Pepito","Perris","Nolita"],
+  "Carnes y brasas": ["Charrúa",["Cilindro","unos 30 € por persona"],["La Vaquería","Collado Villalba"],"Tramo"],
+  "Pescados y mariscos": ["El Doble","El Virrey","Ultramarinos Marín","Fishers Madrid",["Paco Meralgo","en Barcelona"]],
+  "Ensaladas y ligero": ["Greta Salad Bar","Olea","Auakate"],
+  "Internacional y fusión": [["Llama Inn","peruana"],["Fattush","libanesa"],"Farah","Persimmons","Tribeca Bistro","Fluid","Araia","Casa Victoria","Casa Canito","El Buen"],
+  "Tapas y cocina tradicional": ["Casa Dani","Gran Café Santander","Juana la Loca","Celso y Manolo","Macareno","Josefita","Makkila","Treze Bar","Neotaberna Miguelín","Las Bridas desde 1972","La López","La Tasca Suprema","El Economato","Casa Vito","Bar Serranito","Tasquita de los Ochoa","Taberna Martha",["Obrera","Madrid Río"],"Bar Trafalgar","Cotorrita","Croqueta y Botellín","Hermanos Vinagre","Barrutia y el 9","Casa Bucho","Abrelatas","Nato","Bar Cóctel","La Capa","La Esperanza","Casa Gerardo","Cuenllas","House Gildas","Bocado Madrid","Corchito","Velarde 13","Tasca Barea"],
+  "Vinos, vermut y aperitivo": ["Gota","Glop Vinos",["Propaganda","Jorge Juan"],"Caiño","Gastón Wine Bar","Casa Neutrale",["Casa Camacho","vermut"],["Casa Botella","plan de cita"],"Querido Martínez","CanViu","Malamente","Varro","Tempranillo","Masa Vins",["Azumbre","vinos, embutidos y quesos"],["Bar Frecuencia","vinos, cócteles y DJ"],["La Estrella","cócteles"],["Ancho Madrid","Chamberí"]],
+  "Cena especial": ["Fismuler","Torcuato","Los 33","Norah","Nube Madrid","Aredna","Nacha","Her","Hilo"]
+};
+var C = {
+  "Ya probada": ["Pava","Hola Coffee","Pai",["Casa Neutrale","desayuno"],["Clima Cafecito","buen café, el resto sin más"]],
+  "Cafetería": ["Dosis","La Papa",["Gosto Café","brunch"],"Casa Batata","The Little Big Café","Unfltrd Coffee","La Bicicleta Café","Cofi","Faraday","En Bruto","3 Nice and Tasty","East Cream","Churrería Manosanta","El Gordito","Cafeteando","Alma Nomad Fábrica","Baba","Bistró","Pan y Pepinillos",["Norah","brunch y café de especialidad"],"Greta Salad Bar","Naked & Sated","Gran Café Santander","La Cabra"],
+  "Heladería": [["Lolli Gelato","helados y postres"]]
+};
+function aplanar(grupos){
+  var out=[];
+  Object.keys(grupos).forEach(function(tipo){
+    grupos[tipo].forEach(function(e){
+      var n=Array.isArray(e)?e[0]:e, nota=Array.isArray(e)?e[1]:"";
+      out.push({nombre:n,tipo:tipo,nota:nota});
+    });
+  });
+  return out;
+}
+var DATOS={restaurantes:aplanar(R),cafeterias:aplanar(C)};
+var ultimo={};
+var caja=document.getElementById("resultado");
+var botones=document.querySelectorAll("button[data-cat]");
+
+function elegir(cat){
+  var lista=DATOS[cat], item;
+  do{ item=lista[Math.floor(Math.random()*lista.length)]; }
+  while(lista.length>1 && ultimo[cat]===item.nombre);
+  ultimo[cat]=item.nombre;
+  botones.forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.cat===cat?"true":"false"); });
+  caja.innerHTML="";
+  var h=document.createElement("p"); h.className="nombre pop"; h.textContent=item.nombre;
+  var t=document.createElement("span"); t.className="tipo"; t.textContent=item.tipo;
+  caja.appendChild(h); caja.appendChild(t);
+  if(item.nota){ var n=document.createElement("p"); n.className="nota"; n.textContent=item.nota; caja.appendChild(n); }
+  var o=document.createElement("button"); o.type="button"; o.className="otra"; o.textContent="Otra opción";
+  o.addEventListener("click",function(){ elegir(cat); });
+  caja.appendChild(o);
+}
+botones.forEach(function(b){ b.addEventListener("click",function(){ elegir(b.dataset.cat); }); });
+</script>
+</body>
+</html>
