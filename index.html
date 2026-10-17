@@ -79,7 +79,7 @@ var R = {
   "Japonés": ["La Monarracha","Kuikku","Sushi Bar Padre Damián","Akiro","Ponja"],
   "Chino y noodles": [["Biang Biang Bar","noodles"],["Jin Yun Shao Bing","panes rellenos"],"Katsu Chino"],
   "Tailandés y asiático": [["Casa Pei","tailandés"],"Baovan","Bambao","Yoppo Club"],
-  "Italiano": [["Naked & Sated","pasta"],["Pummarola","en Pozuelo"],["Not From Italy","pizzería"],"Mo de Movimiento","NAP","Circo Popolare","L’Antica Trattoria","Taberna Nonetta","Borbotta","Trattoria de Alfredo",["Focacciamo","focaccias"],"Mandarosso","Sardo Madrid",["Manifesto 13","italiana con toque peruano"]],
+  "Italiano": [["Naked & Sated","pasta"],["Pummarola (pizza)","en Pozuelo"],"Not From Italy (pizza)","Mo de Movimiento","NAP (pizza)","Circo Popolare","L’Antica Trattoria","Taberna Nonetta","Borbotta","Trattoria de Alfredo",["Focacciamo","focaccias"],"Mandarosso","Sardo Madrid",["Manifesto 13","italiana con toque peruano"]],
   "Hamburguesas y bocadillos": ["Pacífico Madrid",["La Prensa","smash burgers"],["Galgo","smash burgers"],"Manteca Burger","Burger Jazz","Antonias",["Alright","americana y BBQ"],"Apetito House","San Guchito","Bocátame Madrid","Chez Pepito","Perris","Nolita"],
   "Carnes y brasas": ["Charrúa",["Cilindro","unos 30 € por persona"],["La Vaquería","Collado Villalba"],"Tramo"],
   "Pescados y mariscos": ["El Doble","El Virrey","Ultramarinos Marín","Fishers Madrid",["Paco Meralgo","en Barcelona"]],
@@ -131,10 +131,9 @@ function g(n){ var o={}; o[n]=R[n]; return aplanar(o); }
 function porNombres(lista){ return aplanar(R).filter(function(e){ return lista.indexOf(e.nombre)>-1; }); }
 var CATS=[
   ["Hamburguesa", porNombres(["Pacífico Madrid","La Prensa","Galgo","Manteca Burger","Burger Jazz","Antonias","Alright"])],
-  ["Pizza", porNombres(["Pummarola","Mo de Movimiento","NAP","Not From Italy","Circo Popolare"])],
   ["Bocadillos", porNombres(["Apetito House","San Guchito","Bocátame Madrid","Focacciamo"])],
   ["Tapas", g("Tapas y cocina tradicional")],
-  ["Italiano", g("Italiano")],
+  ["Italiano y pizza", g("Italiano")],
   ["Vino", g("Vinos, vermut y aperitivo")],
   ["Mexicano", g("Mexicano")],
   ["Japonés", g("Japonés")],
