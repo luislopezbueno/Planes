@@ -3,77 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <title>Planes por Madrid</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  color-scheme: light;
+  color-scheme:light;
   --bg:#ffffff; --ink:#3b3320; --muted:#8a7f63;
-  --yellow:#fff1a8; --yellow-hover:#ffe988; --yellow-line:#f1d96a;
+  --yellow:#fff1a8; --yellow-h:#ffe988; --yellow-line:#f1d96a;
+  --body:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 *,*::before,*::after{box-sizing:inherit}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
-  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+[hidden]{display:none !important}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--body)}
 main{max-width:560px;margin:0 auto;padding:48px 20px 56px;text-align:center}
 h1{font-size:clamp(2.2rem,9vw,3.4rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;line-height:1.05}
-.sub{color:var(--muted);margin:0 0 36px;font-size:1.05rem}
-.botones{display:flex;flex-direction:column;gap:14px}
-button{font:inherit;font-weight:700;font-size:1.25rem;color:var(--ink);
-  background:var(--yellow);border:2px solid var(--yellow-line);border-radius:20px;
-  padding:20px 24px;cursor:pointer;transition:background .15s,transform .1s}
-button:hover{background:var(--yellow-hover)}
-button:active{transform:scale(.98)}
-button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-button[aria-pressed="true"]{background:var(--yellow-hover);border-color:var(--ink)}
-.resultado{margin-top:36px;min-height:150px;padding:28px 20px;border:2px dashed var(--yellow-line);border-radius:20px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.resultado .vacio{color:var(--muted)}
+.sub{color:var(--muted);margin:0 0 28px;font-size:1.05rem}
+.stack{display:flex;flex-direction:column;gap:14px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+button{font:inherit}
+button.fit{display:block;width:100%;font-weight:700;font-size:1.25rem;color:var(--ink);background:var(--yellow);
+  border:2px solid var(--yellow-line);border-radius:20px;padding:20px 24px;cursor:pointer;transition:background .15s,transform .1s}
+.cats button.fit{font-size:1.05rem;padding:16px 10px;border-radius:16px}
+button.fit:hover{background:var(--yellow-h)}
+button.fit:active{transform:scale(.98)}
+button.fit[aria-pressed="true"]{background:var(--yellow-h);border-color:var(--ink)}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.resultado{margin-top:32px;min-height:150px;padding:28px 20px;border:2px dashed var(--yellow-line);border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.vacio{color:var(--muted)}
 .nombre{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:800;line-height:1.1;margin:0;overflow-wrap:anywhere}
 .tipo{display:inline-block;background:var(--yellow);border-radius:999px;padding:4px 14px;font-size:.95rem;font-weight:500}
-.nota{color:var(--muted);font-size:.95rem;margin:0}
-.otra{margin-top:16px;font-size:1rem;padding:10px 20px;border-radius:999px;background:#fff}
-.otra:hover{background:var(--yellow)}
-[hidden]{display:none !important}
-.modo{display:block;width:100%;margin-top:28px;background:#fff;font-size:1.05rem;padding:14px 20px}
-.modo:hover{background:var(--yellow)}
-#otro .sub{margin-bottom:20px}
-.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cats button{font-size:1.05rem;padding:14px 10px;border-radius:16px}
-.todos{margin-top:14px;font-size:.95rem;color:var(--muted)}
+.otra,.volver{font-size:1rem;background:#fff;color:var(--ink);border:2px solid var(--yellow-line);border-radius:999px;padding:10px 20px;cursor:pointer}
+.otra{margin-top:14px}
+.volver{margin-top:28px;width:100%;font-size:1.05rem;padding:14px 20px}
+.otra:hover,.volver:hover{background:var(--yellow)}
+.dir{margin-top:6px;width:100%}
+.dir select{font-size:1rem;padding:8px 12px;border-radius:12px;border:2px solid var(--yellow-line);background:#fff;color:var(--ink);max-width:100%;margin-bottom:12px}
+.maps{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.maps a{display:inline-block;text-decoration:none;color:var(--ink);background:var(--yellow);border:2px solid var(--yellow-line);
+  border-radius:999px;padding:10px 18px;font-weight:700;font-size:.95rem}
+.maps a:hover{background:var(--yellow-h)}
+.todos{margin-top:16px;font-size:.95rem;color:var(--muted)}
 .todos summary{cursor:pointer}
 .todos ul{list-style:none;padding:0;margin:8px 0 0}
 .todos li{padding:2px 0}
+.alea-btn{margin-top:26px}
+.cat-titulo{font-size:1.6rem;font-weight:800;margin:0 0 20px}
+.item{display:block}
+.item.abierto button.fit{background:var(--yellow-h);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.panel{border:2px solid var(--yellow-line);border-top:0;border-radius:0 0 20px 20px;padding:18px 14px 20px;background:#fffbe3}
+.panel .dir{margin-top:0}
 .pop{animation:pop .25s ease-out}
 @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
-@media (prefers-reduced-motion:reduce){.pop{animation:none}button{transition:none}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}button.fit{transition:none}}
 </style>
 </head>
 <body>
 <main>
   <h1>Planes por Madrid</h1>
-  <p class="sub">Pulsa y deja que decida la suerte.</p>
-  <div class="botones" role="group" aria-label="Tipo de plan">
-    <button type="button" data-cat="restaurantes" aria-pressed="false">Restaurantes</button>
-    <button type="button" data-cat="cafeterias" aria-pressed="false">Cafeterías</button>
-  </div>
-  <div class="resultado" id="resultado" aria-live="polite">
-    <span class="vacio">Elige una opción para ver tu plan.</span>
-  </div>
-  <button type="button" class="modo" id="btnOtro">Buscar de otro modo</button>
-  <section id="otro" hidden>
+  <section id="home">
     <p class="sub">¿Qué te apetece?</p>
     <div class="cats" id="cats" role="group" aria-label="Categorías"></div>
-    <div class="resultado" id="res2" aria-live="polite">
-      <span class="vacio">Elige una categoría para ver opciones.</span>
+    <button type="button" class="fit alea-btn" id="btnAlea"><span>Aleatorio</span></button>
+  </section>
+  <section id="lista" hidden>
+    <h2 class="cat-titulo" id="listaTitulo"></h2>
+    <div class="stack" id="items"></div>
+    <button type="button" class="volver" id="btnVolver2">Volver</button>
+  </section>
+  <section id="alea" hidden>
+    <p class="sub">Deja que decida la suerte.</p>
+    <div class="stack" role="group" aria-label="Tipo de plan">
+      <button type="button" class="fit" data-pool="restaurantes" data-max="54" aria-pressed="false"><span>Restaurantes</span></button>
+      <button type="button" class="fit" data-pool="cafeterias" data-max="54" aria-pressed="false"><span>Cafeterías</span></button>
     </div>
-    <button type="button" class="modo" id="btnVolver">Volver</button>
+    <div class="resultado" id="res2" aria-live="polite"><span class="vacio">Elige una opción para ver tu plan.</span></div>
+    <button type="button" class="volver" id="btnVolver">Volver</button>
   </section>
 </main>
 <script>
-// Cada elemento: [nombre, tipo, nota opcional]
 var R = {
   "Mexicano": ["Tiki Taco","Bakan Madrid","Tacos La Ventiocho","La Once Mil","Julieta Lemon","La Diavla","Regañadientes","Insurgente"],
   "Japonés": ["La Monarracha","Kuikku","Sushi Bar Padre Damián","Akiro","Ponja"],
@@ -94,99 +106,303 @@ var C = {
   "Cafetería": ["Dosis","La Papa",["Gosto Café","brunch"],"Casa Batata","The Little Big Café","Unfltrd Coffee","La Bicicleta Café","Cofi","Faraday","En Bruto","3 Nice and Tasty","East Cream","Churrería Manosanta","El Gordito","Cafeteando","Alma Nomad Fábrica","Baba","Bistró","Pan y Pepinillos",["Norah","brunch y café de especialidad"],"Greta Salad Bar","Naked & Sated","Gran Café Santander","La Cabra"],
   "Heladería": [["Lolli Gelato","helados y postres"]]
 };
+
+var DIRS={
+  "NAP":[["Lavapiés","C. del Ave María, 19, 28012 Madrid",40.4108,-3.7006],["Malasaña","C. de San Bernardo, 51, 28015 Madrid",40.4255,-3.7075],["Chueca","C. de Víctor Hugo, 5, 28004 Madrid",40.4202,-3.6982],["Chamberí","C. del Cardenal Cisneros, 38, 28010 Madrid",40.4320,-3.7021],["Goya","C. del General Díaz Porlier, 1, 28001 Madrid",40.4242,-3.6774],["Usera","C. de Antonio López, 237, 28041 Madrid",40.3802,-3.6952]],
+  "Pummarola":[["Pozuelo de Alarcón","Av. de Europa, 17, 28224 Pozuelo de Alarcón",40.4409,-3.7887]],
+  "Not From Italy":[["Chamberí (Nuevos Ministerios)","C. de Ponzano, 90, 28003 Madrid",40.4454,-3.6986],["Centro (Malasaña)","Corredera Alta de San Pablo, 33, 28004 Madrid",40.4265,-3.7019]],
+  "Mo de Movimiento":[["Chamberí","C. de Espronceda, 34, 28003 Madrid",40.4403,-3.6950]],
+  "Circo Popolare":[["Castellana","Paseo de la Castellana, 89, 28020 Madrid",40.4502,-3.6931]],
+  "Gota":[["Centro","C. de Prim, 5, 28004 Madrid",40.4220,-3.6944]],
+  "Caiño":[["Retiro","C. de Ibiza, 35, 28009 Madrid",40.4184,-3.6740]],
+  "Gastón Wine Bar":[["Salamanca","C. de Lagasca, 11, 28001 Madrid",40.4221,-3.6859]],
+  "Casa Camacho":[["Malasaña","C. de San Andrés, 4, 28004 Madrid",40.4256,-3.7038]],
+  "Casa Botella":[["Malasaña","C. de Jesús del Valle, 31, 28004 Madrid",40.4251,-3.7033]],
+  "Malamente":[["Retiro","C. de Ibiza, 28, 28009 Madrid",40.4180,-3.6752]],
+  "Tempranillo":[["La Latina","C. de la Cava Baja, 38, 28005 Madrid",40.4120,-3.7101]],
+  "Bar Frecuencia":[["Salamanca","C. de Lagasca, 103, 28006 Madrid",40.4342,-3.6847]],
+  "La Estrella":[["Centro","C. de la Estrella, 3, 28004 Madrid",40.4219,-3.7061]],
+  "Propaganda":[["Jorge Juan","C. de Jorge Juan, 21, 28001 Madrid",40.4240,-3.6848]],
+  "Ancho Madrid":[["Chamberí","C. de García de Paredes, 27, Madrid",40.4369,-3.6989]],
+  "Casa Neutrale":[["Chamberí (Santísima Trinidad)","C. de la Santísima Trinidad, 6, Madrid",40.4354,-3.7004],["Justicia (Amador de los Ríos)","C. de Amador de los Ríos, 1, Madrid",40.4270,-3.6914]],
+  "Masa Vins":[["Chamberí","C. de Trafalgar, 22, Madrid",40.4323,-3.7006]],
+  "Azumbre":[["Chamberí","Paseo de Eduardo Dato, 13, Madrid",40.4332,-3.6941]],
+  "Glop Vinos":[["Chamberí","C. de Fernando el Católico, 6, Madrid",40.4339,-3.7066]],
+  "CanViu":[["Chamberí","C. de Santa Engracia, 27, Madrid",40.4310,-3.6973]],
+  "Querido Martínez":[["Chamberí","C. de Caracas, 1, Madrid",40.4309,-3.6966]],
+  "Varro":[["Salamanca","C. de Serrano, 93, Madrid",40.4375,-3.6865]],
+  "TonTon":[["Chamberí","C. de Jordán, 7, Madrid",40.4330,-3.7033]],
+  "Juana la Loca":[["La Latina","Pl. de Puerta de Moros, 4, 28005 Madrid",40.4125,-3.7115],["Recoletos","C. de Recoletos, 10, 28001 Madrid",40.4218,-3.6903]],
+  "Tiki Taco":[["San Bernardo","C. de San Bernardo, 12, Madrid",40.4222,-3.7076],["Cascorro","Pl. de Cascorro, 6, Madrid",40.4106,-3.7071]],
+  "Bakan Madrid":[["","Pl. de la Independencia, 5, Madrid",40.4206,-3.6882]],
+  "Tacos La Ventiocho":[["","C. de Eloy Gonzalo, 17, Madrid",40.4345,-3.7013]],
+  "La Once Mil":[["","C. de Fernando VI, 14, Madrid",40.4242,-3.6951]],
+  "Julieta Lemon":[["","C. de García de Paredes, 33, Madrid",40.4368,-3.6986]],
+  "La Diavla":[["","C. de Antonio Acuña, 19, Madrid",40.4214,-3.6788]],
+  "Regañadientes":[["","C. del Almirante, 24, Madrid",40.4224,-3.6931]],
+  "Insurgente":[["","C. de Alonso Cano, 10, Madrid",40.4362,-3.6976]],
+  "La Monarracha":[["Chamberí","C. de Alonso Cano, 53, Madrid",40.4401,-3.6978],["Salamanca","C. del Príncipe de Vergara, 78, Madrid",40.4351,-3.6791]],
+  "Kuikku":[["Villalar","C. de Villalar, 6, Madrid",40.4213,-3.6897],["Campoamor","C. de Campoamor, 3, Madrid",40.4257,-3.6963]],
+  "Sushi Bar Padre Damián":[["99 Sushi Bar","C. del Padre Damián, 23, Madrid",40.4586,-3.6859],["Sibuya Urban Sushi Bar","C. del Padre Damián, 38, Madrid",40.4581,-3.6853]],
+  "Akiro":[["","C. de Hermosilla, 40, Madrid",40.4261,-3.6829]],
+  "Ponja":[["","C. de Santa Teresa, 16, Madrid",40.4252,-3.6952]],
+  "Biang Biang Bar":[["Pelayo (Chueca)","C. de Pelayo, 8, Madrid",40.4221,-3.6989],["Vallehermoso","C. de Vallehermoso, 36, Madrid",40.4341,-3.7082]],
+  "Jin Yun Shao Bing":[["","C. de Nicolás Sánchez, 59, Madrid",40.3838,-3.7059]],
+  "Katsu Chino":[["Malasaña","C. de la Luna, 22, Madrid",40.4225,-3.7062],["Castellana","C. de San Germán, 5, Madrid",40.4560,-3.6929]],
+  "Casa Pei":[["","C. de Espronceda, 34, Madrid",40.4404,-3.6947]],
+  "Baovan":[["","C. de Hartzenbusch, 9, Madrid",40.4305,-3.7021]],
+  "Bambao":[["","C. de Nicolás Sánchez, 54, Madrid",40.3839,-3.7061]],
+  "Yoppo Club":[["","C. de San Andrés, 38, Madrid",40.4283,-3.7032]],
+  "Naked & Sated":[["Maestro Victoria","C. del Maestro Victoria, 5, Madrid",40.4184,-3.7054],["Serrano","C. de Serrano, 110, Madrid",40.4354,-3.6863]],
+  "L’Antica Trattoria":[["","C. del Pensamiento, 25, Madrid",40.4591,-3.6960]],
+  "Taberna Nonetta":[["General Castaños","C. del General Castaños, 15, Madrid",40.4263,-3.6937],["Príncipe de Vergara","C. del Príncipe de Vergara, 285, Madrid",40.4593,-3.6771]],
+  "Trattoria de Alfredo":[["","C. de El Españoleto, 4, Madrid",40.4311,-3.6965]],
+  "Focacciamo":[["San Bernardo","C. de San Bernardo, 29, Madrid",40.4231,-3.7077],["Murillo","C. de Murillo, 8, Madrid",40.4334,-3.7005]],
+  "Mandarosso":[["","C. de Santa Ana, 21, Madrid",40.4095,-3.7088]],
+  "Sardo Madrid":[["","C. de Carranza, 10, Madrid",40.4294,-3.7038]],
+  "Manifesto 13":[["","C. de Hartzenbusch, 12, Madrid",40.4304,-3.7016]],
+  "Pacífico Madrid":[["La Latina","C. de Don Pedro, 6, Madrid",40.4117,-3.7120],["Chueca","C. del Conde de Xiquena, 2, Madrid",40.4221,-3.6941]],
+  "La Prensa":[["","C. de Colón, 3, Madrid",40.4237,-3.7010]],
+  "Manteca Burger":[["","C. del Príncipe de Vergara, 56, Madrid",40.4319,-3.6793]],
+  "Burger Jazz":[["Fomento","C. de Fomento, 37, Madrid",40.4224,-3.7113],["Delicias","Paseo de las Delicias, 129, Madrid",40.3925,-3.6947]],
+  "Antonias":[["","C. de Campoamor, 2, Madrid",40.4255,-3.6962]],
+  "Galgo":[["Espíritu Santo","C. del Espíritu Santo, 40, Madrid",40.4257,-3.7052],["Vallecas","Av. de Pablo Neruda, 89, Madrid",40.3812,-3.6603]],
+  "Alright":[["López de Hoyos","C. de López de Hoyos, 8, Madrid",40.4369,-3.6874],["Fuencarral","C. de Pedro Rico, 41, Madrid",40.4826,-3.7012]],
+  "Apetito House":[["","C. de Fuencarral, 134, Madrid",40.4313,-3.7030]],
+  "San Guchito":[["","C. de Santa Engracia, 36, Madrid",40.4320,-3.6972]],
+  "Bocátame Madrid":[["","C. de Augusto Figueroa, 24, Madrid",40.4219,-3.6976]],
+  "Chez Pepito":[["","C. del Cardenal Cisneros, 66, Madrid",40.4345,-3.7027]],
+  "Perris":[["","C. de San Vicente Ferrer, 38, Madrid",40.4259,-3.7044]],
+  "Nolita":[["","C. de Ponzano, 11, Madrid",40.4379,-3.6995]],
+  "Charrúa":[["","C. del Conde de Xiquena, 4, Madrid",40.4223,-3.6940]],
+  "Cilindro":[["","C. de Don Ramón de la Cruz, 83, Madrid",40.4288,-3.6749]],
+  "La Vaquería":[["","C. Fuente del Álamo, 6, Collado Villalba",40.6447,-3.9932]],
+  "Tramo":[["","C. de Eugenio Salazar, 56, Madrid",40.4482,-3.6754]],
+  "El Doble":[["José Abascal","C. de José Abascal, 16, Madrid",40.4383,-3.6995],["Ponzano","C. de Ponzano, 58, Madrid",40.4415,-3.6990]],
+  "El Virrey":[["","C. de Zurbarán, 8, Madrid",40.4294,-3.6935]],
+  "Ultramarinos Marín":[["","C. de San Andrés, 31, Madrid",40.4285,-3.7035]],
+  "Fishers Madrid":[["","C. de Velázquez, 41, Madrid",40.4267,-3.6842]],
+  "Paco Meralgo":[["Barcelona","Carrer de Muntaner, 171, Barcelona",41.3916,2.1525]],
+  "Greta Salad Bar":[["Recoletos","C. de Recoletos, 11, Madrid",40.4220,-3.6901],["Mejía Lequerica","C. de Mejía Lequerica, 3, Madrid",40.4264,-3.6979]],
+  "Olea":[["","C. del Castillo, 19, Madrid",40.4342,-3.6995]],
+  "Llama Inn":[["","C. del Conde de Xiquena, 2, Madrid",40.4220,-3.6941]],
+  "Fattush":[["Santa Engracia","C. de Santa Engracia, 141, Madrid",40.4433,-3.7025],["Tetuán","C. del Poeta Joan Maragall, 28, Madrid",40.4580,-3.6919]],
+  "Farah":[["","C. de los Mancebos, 2, Madrid",40.4122,-3.7117]],
+  "Persimmons":[["","C. de Bárbara de Braganza, 2, Madrid",40.4236,-3.6939]],
+  "Tribeca Bistro":[["","C. del Marqués del Duero, 5, Madrid",40.4205,-3.6913]],
+  "Torcuato":[["","C. de Serrano, 61, Madrid",40.4322,-3.6870]],
+  "Araia":[["","C. de Murillo, 3, Madrid",40.4334,-3.7007]],
+  "Casa Victoria":[["","C. del Olmo, 20, Madrid",40.4115,-3.7000]],
+  "Casa Canito":[["","C. de Recoletos, 11, Madrid",40.4220,-3.6901]],
+  "El Buen":[["","C. de los Hermanos Bécquer, 5, Madrid",40.4365,-3.6879]],
+  "Casa Dani":[["","C. de Ayala, 28, Madrid",40.4270,-3.6857]],
+  "Gran Café Santander":[["","Pl. de Santa Bárbara, 4, Madrid",40.4277,-3.6963]],
+  "Celso y Manolo":[["","C. de la Libertad, 1, Madrid",40.4203,-3.6975]],
+  "Macareno":[["","C. de San Vicente Ferrer, 44, Madrid",40.4260,-3.7047]],
+  "Josefita":[["","C. de Valverde, 42, Madrid",40.4233,-3.7015]],
+  "Makkila":[["Almagro","C. de Almagro, 22, Madrid",40.4292,-3.6938],["Toledo","C. de Toledo, 64, Madrid",40.4099,-3.7097]],
+  "Treze Bar":[["","C. del General Pardiñas, 34, Madrid",40.4268,-3.6783]],
+  "Neotaberna Miguelín":[["","C. de Santa Engracia, 57, Madrid",40.4337,-3.6985]],
+  "Las Bridas desde 1972":[["","C. de José Abascal, 59, Madrid",40.4383,-3.6926]],
+  "La López":[["","C. de Santa Isabel, 5 (Mercado de Antón Martín), Madrid",40.4117,-3.6987]],
+  "La Tasca Suprema":[["","C. de Argensola, 7, Madrid",40.4251,-3.6952]],
+  "El Economato":[["","C. de Belén, 5, Madrid",40.4243,-3.6968]],
+  "Casa Vito":[["","C. de Juan Bravo, 43, Madrid",40.4327,-3.6769]],
+  "Bar Serranito":[["","C. de Serrano, 226, Madrid",40.4532,-3.6798]],
+  "Tasquita de los Ochoa":[["","P.º de la Castellana, 117, Madrid",40.4571,-3.6907]],
+  "Taberna Martha":[["","C. de Miguel Servet, 15, Madrid",40.4065,-3.7014]],
+  "Obrera":[["","Av. del Manzanares (Madrid Río), Madrid",40.4019,-3.7229]],
+  "Bar Trafalgar":[["","C. de Alburquerque, 14, Madrid",40.4311,-3.7011]],
+  "Cotorrita":[["","C. de Santa Engracia, 33, Madrid",40.4314,-3.6974]],
+  "Hermanos Vinagre":[["Lavapiés","C. de Argumosa, 12, Madrid",40.4080,-3.6992],["Chamberí","C. del Cardenal Cisneros, 26, Madrid",40.4313,-3.7019]],
+  "Barrutia y el 9":[["","C. de Santa Teresa, 9, Madrid",40.4256,-3.6953]],
+  "Casa Bucho":[["","C. de Trafalgar, 22, Madrid",40.4324,-3.7006]],
+  "Nato":[["","C. de Elisa, 1, Madrid",40.3872,-3.7096]],
+  "Bar Cóctel":[["","C. de Canillas, 6, Madrid",40.4402,-3.6778]],
+  "La Capa":[["","C. de Condes de Barcelona, 8, Madrid",40.3955,-3.7144]],
+  "La Esperanza":[["","C. de la Torrecilla del Leal, 3, Madrid",40.4115,-3.6994]],
+  "Casa Gerardo":[["","C. de Calatrava, 21, Madrid",40.4092,-3.7119]],
+  "Cuenllas":[["","C. de Ferraz, 5, Madrid",40.4257,-3.7171]],
+  "Bocado Madrid":[["","C. de Santa Teresa, 1, Madrid",40.4263,-3.6963]],
+  "Corchito":[["","C. del Salitre, 2, Madrid",40.4102,-3.6977]],
+  "Velarde 13":[["","C. de Velarde, 13, Madrid",40.4268,-3.7032]],
+  "Tasca Barea":[["","C. de Rodas, 2, Madrid",40.4088,-3.7054]],
+  "Fismuler":[["","C. de Sagasta, 29, Madrid",40.4282,-3.6974]],
+  "Los 33":[["","Pl. de las Salesas, 9, Madrid",40.4238,-3.6948]],
+  "Norah":[["","C. del General Pardiñas, 15, Madrid",40.4254,-3.6788]],
+  "Nube Madrid":[["","C. de los Madrazo, 12, Madrid",40.4175,-3.6976]],
+  "Aredna":[["","C. de Barceló, 5, Madrid",40.4266,-3.7007]],
+  "Nacha":[["","C. del Conde Duque, 32, Madrid",40.4280,-3.7100]],
+  "Her":[["","C. de Hermosilla, 4, Madrid",40.4264,-3.6888]],
+  "Lolli Gelato":[["","C. de Palafox, 16, Madrid",40.4318,-3.7014]],
+  "Pava":[["Usera","C. de San Graciano, 3, Madrid",40.3929,-3.7028],["Puerta del Ángel","C. de Doña Urraca, 16, Madrid",40.4131,-3.7257]],
+  "Hola Coffee":[["Fourquet","C. del Dr. Fourquet, 33, Madrid",40.4070,-3.6991],["Lagasca","C. de Lagasca, 42, Madrid",40.4250,-3.6853]],
+  "Pai":[["","C. de la Inmaculada Concepción, 29, Madrid",40.3921,-3.7123]],
+  "Clima Cafecito":[["","C. de Alonso Cano, 51, Madrid",40.4399,-3.6979]],
+  "Dosis":[["","C. de Gonzalo de Córdoba, 3, Madrid",40.4323,-3.7033]],
+  "La Papa":[["Barquillo","C. del Barquillo, 20, Madrid",40.4218,-3.6956],["Studio (Trafalgar)","C. de Trafalgar, 22, Madrid",40.4322,-3.7005]],
+  "Gosto Café":[["León","C. del León, 30, Madrid",40.4129,-3.6994],["La Palma","C. de la Palma, 47, Madrid",40.4264,-3.7056]],
+  "Casa Batata":[["","C. de Echegaray, 9, Madrid",40.4157,-3.6995]],
+  "The Little Big Café":[["Moncloa","C. de Fernández de los Ríos, 61, Madrid",40.4352,-3.7127],["Chamberí","C. de Fernández de los Ríos, 14, Madrid",40.4351,-3.7059]],
+  "Unfltrd Coffee":[["","C. de Amaniel, 36, Madrid",40.4282,-3.7095]],
+  "La Bicicleta Café":[["","Pl. de San Ildefonso, 9, Madrid",40.4238,-3.7022]],
+  "Cofi":[["Acuerdo","C. del Acuerdo, 36, Madrid",40.4293,-3.7077],["Rodríguez San Pedro","C. de Rodríguez San Pedro, 2, Madrid",40.4316,-3.7056]],
+  "Faraday":[["","C. de San Lucas, 9, Madrid",40.4238,-3.6963]],
+  "En Bruto":[["San Lucas","C. de San Lucas, 13, Madrid",40.4237,-3.6960],["Malasaña","Pl. de Carlos Cambronero, Madrid",40.4232,-3.7042]],
+  "East Cream":[["Almirante","C. del Almirante, 10, Madrid",40.4224,-3.6945],["Hermosilla","C. de Hermosilla, 38, Madrid",40.4262,-3.6831]],
+  "Churrería Manosanta":[["","C. de Hermosilla, 97, Madrid",40.4260,-3.6751]],
+  "El Gordito":[["Palma","C. de la Palma, 41, Madrid",40.4264,-3.7051],["Cascorro","Pl. de Cascorro, 17, Madrid",40.4104,-3.7075]],
+  "Cafeteando":[["","Pl. de Olavide, 10, Madrid",40.4332,-3.7006]],
+  "Alma Nomad Fábrica":[["","C. de los Urquiza, 17, Madrid",40.4330,-3.6454]],
+  "Baba":[["","C. del Conde de Romanones, 5, Madrid",40.4135,-3.7046]],
+  "Bistró":[["","C. de Fernández de los Ríos, 14, Madrid",40.4351,-3.7059]],
+  "Pan y Pepinillos":[["","C. de El Escorial, 2, Madrid",40.4238,-3.7027]],
+  "La Cabra":[["","C. de las Infantas, 25, Madrid",40.4202,-3.6977]],
+  "Borbotta":[["Barcelona","Carrer del Sabateret, 4, Barcelona",41.3858,2.1823]],
+  "Fluid":[["","C. del Conde Duque, 14, Madrid",40.4264,-3.7111]],
+};
+var miPos=null, ubicEstado=0;
+function limpio(n){ return n.replace(/\s*\(.*\)\s*$/,""); }
+function km(a,b,c,d){ var r=Math.PI/180, x=(c-a)*r, y=(d-b)*r*Math.cos((a+c)/2*r); return 6371*Math.sqrt(x*x+y*y); }
+function fmt(k){ return k<1 ? (Math.round(k*100)*10)+" m" : k.toFixed(1).replace(".",",")+" km"; }
+function dist(l){ return km(miPos[0],miPos[1],l[2],l[3]); }
+function construir(base){
+  var lugares=DIRS[base], lista=lugares?lugares.slice():null;
+  if(lista && miPos) lista.sort(function(p,q){ return dist(p)-dist(q); });
+  var box=document.createElement("div"); box.className="dir";
+  var sel=null;
+  if(lista && lista.length>1){
+    sel=document.createElement("select"); sel.setAttribute("aria-label","Elige el local");
+    lista.forEach(function(l,i){ var o=document.createElement("option"); o.value=i; o.textContent=(l[0]||l[1])+(miPos?" · "+fmt(dist(l)):""); sel.appendChild(o); });
+    box.appendChild(sel);
+  }
+  var maps=document.createElement("div"); maps.className="maps";
+  var g=document.createElement("a"), a=document.createElement("a");
+  [g,a].forEach(function(x){ x.target="_blank"; x.rel="noopener"; maps.appendChild(x); });
+  box.appendChild(maps);
+  function pintar(){
+    var l=lista?lista[sel?sel.value:0]:null, q;
+    if(l){
+      q=encodeURIComponent(base+", "+l[1]);
+      g.href="https://www.google.com/maps/dir/?api=1&destination="+q;
+      a.href="https://maps.apple.com/?daddr="+q+"&dirflg=d";
+    } else {
+      q=encodeURIComponent(base+" Madrid");
+      g.href="https://www.google.com/maps/search/?api=1&query="+q;
+      a.href="https://maps.apple.com/?q="+q;
+    }
+    g.textContent="Google Maps"; a.textContent="Apple Maps";
+  }
+  if(sel) sel.addEventListener("change",pintar);
+  pintar();
+  if(lista && lista.length>1 && !miPos && navigator.geolocation && ubicEstado===0){
+    ubicEstado=1;
+    navigator.geolocation.getCurrentPosition(function(p){
+      miPos=[p.coords.latitude,p.coords.longitude]; ubicEstado=3;
+      if(box.parentNode) box.replaceWith(construir(base));
+    },function(){ ubicEstado=2; },{timeout:10000});
+  }
+  return box;
+}
+function agregarDireccion(cont,nombre){ cont.appendChild(construir(limpio(nombre))); }
+
 function aplanar(grupos){
   var out=[];
   Object.keys(grupos).forEach(function(tipo){
     grupos[tipo].forEach(function(e){
-      var n=Array.isArray(e)?e[0]:e, nota=Array.isArray(e)?e[1]:"";
-      out.push({nombre:n,tipo:tipo,nota:nota});
+      out.push({nombre:Array.isArray(e)?e[0]:e,tipo:tipo,nota:Array.isArray(e)?e[1]:""});
     });
   });
   return out;
 }
-var DATOS={restaurantes:aplanar(R),cafeterias:aplanar(C)};
-var ultimo={};
-var caja=document.getElementById("resultado");
-var botones=document.querySelectorAll("button[data-cat]");
-
-function elegir(cat){
-  var lista=DATOS[cat], item;
-  do{ item=lista[Math.floor(Math.random()*lista.length)]; }
-  while(lista.length>1 && ultimo[cat]===item.nombre);
-  ultimo[cat]=item.nombre;
-  botones.forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.cat===cat?"true":"false"); });
-  caja.innerHTML="";
-  var h=document.createElement("p"); h.className="nombre pop"; h.textContent=item.nombre;
-  var t=document.createElement("span"); t.className="tipo"; t.textContent=item.tipo;
-  caja.appendChild(h); caja.appendChild(t);
-  if(item.nota){ var n=document.createElement("p"); n.className="nota"; n.textContent=item.nota; caja.appendChild(n); }
-  var o=document.createElement("button"); o.type="button"; o.className="otra"; o.textContent="Otra opción";
-  o.addEventListener("click",function(){ elegir(cat); });
-  caja.appendChild(o);
-}
-botones.forEach(function(b){ b.addEventListener("click",function(){ elegir(b.dataset.cat); }); });
-
-// ---- Buscar de otro modo ----
-function g(n){ var o={}; o[n]=R[n]; return aplanar(o); }
-function porNombres(lista){ return aplanar(R).filter(function(e){ return lista.indexOf(e.nombre)>-1; }); }
+function g1(n){ var o={}; o[n]=R[n]; return aplanar(o); }
+function porNombres(l){ return aplanar(R).filter(function(e){ return l.indexOf(e.nombre)>-1; }); }
+var POOLS={restaurantes:aplanar(R),cafeterias:aplanar(C)};
 var CATS=[
   ["Hamburguesa", porNombres(["Pacífico Madrid","La Prensa","Galgo","Manteca Burger","Burger Jazz","Antonias","Alright"])],
+  ["Italiano y pizza", g1("Italiano")],
+  ["Tapas", g1("Tapas y cocina tradicional")],
+  ["Vino", g1("Vinos, vermut y aperitivo")],
   ["Bocadillos", porNombres(["Apetito House","San Guchito","Bocátame Madrid","Focacciamo"])],
-  ["Tapas", g("Tapas y cocina tradicional")],
-  ["Italiano y pizza", g("Italiano")],
-  ["Vino", g("Vinos, vermut y aperitivo")],
-  ["Mexicano", g("Mexicano")],
-  ["Japonés", g("Japonés")],
-  ["Chino y noodles", g("Chino y noodles")],
-  ["Asiático", g("Tailandés y asiático")],
-  ["Carnes", g("Carnes y brasas")],
-  ["Pescado y marisco", g("Pescados y mariscos")],
-  ["Ensaladas", g("Ensaladas y ligero")],
-  ["Internacional", g("Internacional y fusión")],
-  ["Cena especial", g("Cena especial")],
+  ["Mexicano", g1("Mexicano")],
+  ["Japonés", g1("Japonés")],
+  ["Chino y noodles", g1("Chino y noodles")],
+  ["Asiático", g1("Tailandés y asiático")],
+  ["Carnes", g1("Carnes y brasas")],
+  ["Pescado y marisco", g1("Pescados y mariscos")],
+  ["Ensaladas", g1("Ensaladas y ligero")],
+  ["Internacional", g1("Internacional y fusión")],
+  ["Cena especial", g1("Cena especial")],
   ["Café", aplanar({"Ya probada":C["Ya probada"],"Cafetería":C["Cafetería"]})],
   ["Helado", aplanar({"Heladería":C["Heladería"]})]
 ];
-var main=document.querySelector("main");
-var otro=document.getElementById("otro");
-var cats=document.getElementById("cats");
-var res2=document.getElementById("res2");
-var ultimo2={};
-function mostrarOtro(si){
-  Array.prototype.forEach.call(main.children,function(el){
-    if(el.tagName==="H1"||el===otro) return;
-    el.hidden=si;
-  });
-  otro.hidden=!si;
-  window.scrollTo(0,0);
+var ultimo={};
+function sortear(lista,clave){
+  var it;
+  do{ it=lista[Math.floor(Math.random()*lista.length)]; }
+  while(lista.length>1 && ultimo[clave]===it.nombre);
+  ultimo[clave]=it.nombre; return it;
 }
-function elegirCat(c,btn){
-  var lista=c[1], item;
-  do{ item=lista[Math.floor(Math.random()*lista.length)]; }
-  while(lista.length>1 && ultimo2[c[0]]===item.nombre);
-  ultimo2[c[0]]=item.nombre;
-  Array.prototype.forEach.call(cats.children,function(x){ x.setAttribute("aria-pressed", x===btn?"true":"false"); });
-  res2.innerHTML="";
+function mostrar(cont,item,otra,lista,etiqueta){
+  cont.innerHTML="";
   var h=document.createElement("p"); h.className="nombre pop"; h.textContent=item.nombre;
   var t=document.createElement("span"); t.className="tipo"; t.textContent=item.tipo;
-  res2.appendChild(h); res2.appendChild(t);
-  if(item.nota){ var n=document.createElement("p"); n.className="nota"; n.textContent=item.nota; res2.appendChild(n); }
+  cont.appendChild(h); cont.appendChild(t);
+  agregarDireccion(cont,item.nombre);
   var o=document.createElement("button"); o.type="button"; o.className="otra"; o.textContent="Otra opción";
-  o.addEventListener("click",function(){ elegirCat(c,btn); });
-  res2.appendChild(o);
-  var d=document.createElement("details"); d.className="todos";
-  var s=document.createElement("summary"); s.textContent="Ver todos los de "+c[0]+" ("+lista.length+")";
-  var ul=document.createElement("ul");
-  lista.forEach(function(e){ var li=document.createElement("li"); li.textContent=e.nombre+(e.nota?" — "+e.nota:""); ul.appendChild(li); });
-  d.appendChild(s); d.appendChild(ul); res2.appendChild(d);
+  o.addEventListener("click",otra); cont.appendChild(o);
 }
+function $(s){ return document.querySelector(s); }
+var cats=$("#cats");
 CATS.forEach(function(c){
-  var b=document.createElement("button"); b.type="button"; b.textContent=c[0]; b.setAttribute("aria-pressed","false");
-  b.addEventListener("click",function(){ elegirCat(c,b); });
+  var b=document.createElement("button"); b.type="button"; b.className="fit"; b.dataset.max="26";
+  b.setAttribute("aria-pressed","false");
+  var sp=document.createElement("span"); sp.textContent=c[0]; b.appendChild(sp);
+  b.addEventListener("click",function(){ abrirLista(c); });
   cats.appendChild(b);
 });
-document.getElementById("btnOtro").addEventListener("click",function(){ mostrarOtro(true); });
-document.getElementById("btnVolver").addEventListener("click",function(){ mostrarOtro(false); });
+document.querySelectorAll("[data-pool]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var k=b.dataset.pool, lista=POOLS[k];
+    document.querySelectorAll("[data-pool]").forEach(function(x){ x.setAttribute("aria-pressed", x===b?"true":"false"); });
+    var go=function(){ mostrar($("#res2"),sortear(lista,k),go); };
+    go();
+  });
+});
+function fitAll(){}
+function vista(n){
+  ["home","lista","alea"].forEach(function(id){ $("#"+id).hidden=(id!==n); });
+  window.scrollTo(0,0);
+}
+function abrirLista(c){
+  $("#listaTitulo").textContent=c[0];
+  var cont=$("#items"); cont.innerHTML="";
+  c[1].forEach(function(e){
+    var it=document.createElement("div"); it.className="item";
+    var b=document.createElement("button"); b.type="button"; b.className="fit"; b.setAttribute("aria-expanded","false");
+    var sp=document.createElement("span"); sp.textContent=e.nombre; b.appendChild(sp);
+    var panel=document.createElement("div"); panel.className="panel"; panel.hidden=true;
+    b.addEventListener("click",function(){
+      var abrir=panel.hidden;
+      Array.prototype.forEach.call(cont.children,function(o){
+        o.classList.remove("abierto"); o.querySelector(".panel").hidden=true; o.firstChild.setAttribute("aria-expanded","false");
+      });
+      if(abrir){
+        if(!panel.firstChild) agregarDireccion(panel,e.nombre);
+        panel.hidden=false; it.classList.add("abierto"); b.setAttribute("aria-expanded","true");
+        it.scrollIntoView({block:"nearest",behavior:"smooth"});
+      }
+    });
+    it.appendChild(b); it.appendChild(panel); cont.appendChild(it);
+  });
+  vista("lista");
+}
+$("#btnAlea").addEventListener("click",function(){ vista("alea"); });
+$("#btnVolver").addEventListener("click",function(){ vista("home"); });
+$("#btnVolver2").addEventListener("click",function(){ vista("home"); });
+window.addEventListener("resize",fitAll);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+fitAll();
 </script>
 </body>
 </html>
